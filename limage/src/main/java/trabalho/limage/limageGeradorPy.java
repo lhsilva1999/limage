@@ -47,9 +47,9 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
         if (tabela.verificarTipo(ctx.IDENT().getText()) == TabelaDeSimbolos.Tipolimage.IMAGEM) {
             // É imagem
             saida.append(ctx.IDENT().getText() + "_path = str(input(\"Digite o caminho para sua imagem: \"))\n");
-            saida.append("while not (os.isfile("+ ctx.IDENT().getText() +"_path)):");
+            saida.append("while not (os.isfile("+ ctx.IDENT().getText() +"_path)):\n");
             saida.append("    " + ctx.IDENT().getText() + "_path = str(input(\"Digite o caminho para sua imagem: \"))\n");
-            saida.append(ctx.IDENT().getText() + " = cv.imread(" + ctx.IDENT().getText() + "_path, 0)\n");
+            saida.append(ctx.IDENT().getText() + " = cv.imread(" + ctx.IDENT().getText() + "_path)\n");
         } else {
             // É inteiro
             saida.append(ctx.IDENT().getText() + " = int(input(\"Digite o valor inteiro do seu parametro: \"))\n");
@@ -89,10 +89,18 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
                 if (ctx.param2 != null) {
                     param2 = ctx.param2.getText();
                     // Garante que o parâmetro não será par
-                    if (Integer.parseInt(param2) % 2 == 0) {
-                        param2 = String.valueOf(Integer.parseInt(param2) + 1);
-                        saida.append("print(\"O segundo parametro nao pode ser par, foi somado um a esse valor\")\n");
+                    
+                    if(ctx.IDENT(1)!=null){
+                       saida.append("if " + param2 + " % 2 == 0:\n");
+                       saida.append("    " + param2 + " += 1\n"); 
                     }
+                    else{
+                        saida.append("param2 = " + param2 + "\n");
+                        saida.append("if param2 % 2 == 0:\n");
+                        saida.append("    param2 = " + param2 + " + 1\n");
+                        param2 = "param2";
+                    }
+                    
                 } else {
                     param2 = "5";
                 }
@@ -128,6 +136,20 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
         }
         return null;
     }
+    
+    @Override
+    public Void visitCmdFinal(limageParser.CmdFinalContext ctx){
+        if(ctx.cmdSalvar() != null){
+            saida.append(ctx.cmdSalvar().IDENT().getText() + " = " + ctx.cmdSalvar().IDENT().getText() 
+                    + " / np.max(" + ctx.cmdSalvar().IDENT().getText() + ")\n");
+        }
+        else {
+            saida.append(ctx.cmdMostrar().IDENT().getText() + " = " + ctx.cmdMostrar().IDENT().getText() 
+                    + " / np.max(" + ctx.cmdMostrar().IDENT().getText() + ")\n");
+        }
+        
+        return super.visitCmdFinal(ctx);
+    }
 
     // Gera um código Python para realizar um plot de uma imagem
     @Override
@@ -141,7 +163,7 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
     // Gera um código Python para salvar uma imagem
     @Override
     public Void visitCmdSalvar(limageParser.CmdSalvarContext ctx) {
-        saida.append("cv.imwrite(os.splitext(" + ctx.IDENT().getText() + "_path)[0]+\"_edited\" + os.splitext(" + ctx.IDENT().getText() + "_path)[1], " + ctx.IDENT().getText() + ")\n");
+        saida.append("plt.imsave(os.splitext(" + ctx.IDENT().getText() + "_path)[0]+\"_edited\" + os.splitext(" + ctx.IDENT().getText() + "_path)[1], " + ctx.IDENT().getText() + ")\n");
         return null;
     }
 }
