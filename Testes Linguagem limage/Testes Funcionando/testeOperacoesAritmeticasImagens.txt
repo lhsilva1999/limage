@@ -1,0 +1,13 @@
+ALG
+# Operações aritmeticas #
+imagem : A
+leia(A)
+imagem: B
+leia(B)
+A + B
+A - B
+A * B
+A / B
+salvar(A)
+mostrar(A)	
+FIM
