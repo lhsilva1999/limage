@@ -24,13 +24,24 @@ public class Principal {
         // Instanciando a classe do analisador Lexico
         limageLexer lex = new limageLexer(cs);
 
-         // Instanciando a classe que recebe os tokens gerados pelo analisador lexico
-        CommonTokenStream tokens = new CommonTokenStream(lex);
-        // Instanciando o parser de analise sintatica
-        limageParser parser = new limageParser(tokens);
+        limageParser.ProgramaContext arvore = null;
+        
+        boolean erroSintatico = false;
+        
+        try {
+            // Instanciando a classe que recebe os tokens gerados pelo analisador lexico
+            CommonTokenStream tokens = new CommonTokenStream(lex);
+            // Instanciando o parser de analise sintatica
+            limageParser parser = new limageParser(tokens);
 
-        // Iniciando a analise sintatica pela Regra inicial
-        limageParser.ProgramaContext arvore = parser.programa();
+            // Iniciando a analise sintatica pela Regra inicial
+            arvore = parser.programa();
+        } catch (RuntimeException e) {
+            // Imprime as mensagens de exceções
+            System.out.println("Oi Léo");
+            erroSintatico = true;
+            e.printStackTrace();
+        }
 
         // Iniciando a analise semantica por meio da classe AnalisadorSemantico
         AnalisadorSemantico as = new AnalisadorSemantico();
@@ -41,7 +52,7 @@ public class Principal {
             System.out.println(s);
         });
 
-        if (AnalisadorSemanticoUtils.errosSemanticos.isEmpty()) {
+        if (AnalisadorSemanticoUtils.errosSemanticos.isEmpty() && !erroSintatico) {
             // Iniciando o gerador de codigos por meio da classe limageGeradorPy caso não haja erros
             limageGeradorPy lgp = new limageGeradorPy();
             lgp.visitPrograma(arvore);

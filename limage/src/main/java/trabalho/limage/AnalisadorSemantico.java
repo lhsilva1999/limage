@@ -31,7 +31,7 @@ public class AnalisadorSemantico extends limageBaseVisitor<Void> {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT().getSymbol(), "Variavel " + ctx.IDENT().getText() + " ja declarada anteriormente");
             return null;
         }
-        
+
         // Adiciona a variável na tabela
         tabela.adicionar(ctx.IDENT().getText(), TabelaDeSimbolos.Tipolimage.INTEIRO);
         return null;
@@ -54,8 +54,7 @@ public class AnalisadorSemantico extends limageBaseVisitor<Void> {
         // Adiciona erro se o primeiro parâmetro não existe na tabela
         if (tabela.verificar(ctx.IDENT(0).getText()) == null) {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(0).getSymbol(), "Imagem " + ctx.IDENT(0).getText() + " nao declarada anteriormente");
-        }
-        // Adiciona erro se o primeiro parâmetro não é uma imagem
+        } // Adiciona erro se o primeiro parâmetro não é uma imagem
         else if (tabela.verificarTipo(ctx.IDENT(0).getText()) != TabelaDeSimbolos.Tipolimage.IMAGEM) {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(0).getSymbol(), ctx.IDENT(0).getText() + " possui tipo incompativel com imagem");
         }
@@ -65,9 +64,7 @@ public class AnalisadorSemantico extends limageBaseVisitor<Void> {
             // Adiciona erro se o segundo parâmetro não existe na tabela
             if (tabela.verificar(ctx.IDENT(1).getText()) == null) {
                 AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(1).getSymbol(), "Variavel " + ctx.IDENT(1).getText() + " nao declarada anteriormente");
-            }
-
-            // Adiciona erro se o segundo parâmetro não é do tipo inteiro
+            } // Adiciona erro se o segundo parâmetro não é do tipo inteiro
             else if (tabela.verificarTipo(ctx.IDENT(1).getText()) != TabelaDeSimbolos.Tipolimage.INTEIRO) {
                 AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(1).getSymbol(), ctx.IDENT(1).getText() + " possui tipo incompativel com inteiro");
             }
@@ -81,18 +78,17 @@ public class AnalisadorSemantico extends limageBaseVisitor<Void> {
         // Adiciona erro se o operando à esquerda não existe na tabela
         if (tabela.verificar(ctx.IDENT(0).getText()) == null) {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(0).getSymbol(), "Imagem " + ctx.IDENT(0).getText() + " nao declarada anteriormente");
-        } 
-        
-        // Adiciona erro se o operando à esquerda não é uma imagem 
+        } // Adiciona erro se o operando à esquerda não é uma imagem 
         else if (tabela.verificarTipo(ctx.IDENT(0).getText()) != TabelaDeSimbolos.Tipolimage.IMAGEM) {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(0).getSymbol(), ctx.IDENT(0).getText() + " possui tipo incompativel com imagem");
         }
 
         // Adiciona erro se o operando à direita não existe na tabela 
-        if (tabela.verificar(ctx.IDENT(1).getText()) == null) {
-            AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(1).getSymbol(), "Imagem " + ctx.IDENT(1).getText() + " nao declarada anteriormente");
+        if (ctx.IDENT(1) != null) {
+            if (tabela.verificar(ctx.IDENT(1).getText()) == null) {
+                AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(1).getSymbol(), "Imagem " + ctx.IDENT(1).getText() + " nao declarada anteriormente");
+            }
         }
-
         return null;
     }
 
@@ -102,8 +98,7 @@ public class AnalisadorSemantico extends limageBaseVisitor<Void> {
         // Adiciona erro se a imagem desejada não existe na tabela
         if (tabela.verificar(ctx.IDENT().getText()) == null) {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT().getSymbol(), "Imagem " + ctx.IDENT().getText() + " nao declarada anteriormente");
-        } 
-        // Adiciona erro se o parâmetro não é uma imagem
+        } // Adiciona erro se o parâmetro não é uma imagem
         else if (tabela.verificarTipo(ctx.IDENT().getText()) != TabelaDeSimbolos.Tipolimage.IMAGEM) {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT().getSymbol(), ctx.IDENT().getText() + " possui tipo incompativel com imagem");
         }
@@ -117,8 +112,7 @@ public class AnalisadorSemantico extends limageBaseVisitor<Void> {
         // Adiciona erro se a imagem desejada não existe na tabela
         if (tabela.verificar(ctx.IDENT().getText()) == null) {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT().getSymbol(), "Imagem " + ctx.IDENT().getText() + " nao declarada anteriormente");
-        } 
-        // Adiciona erro se o parâmetro não é uma imagem
+        } // Adiciona erro se o parâmetro não é uma imagem
         else if (tabela.verificarTipo(ctx.IDENT().getText()) != TabelaDeSimbolos.Tipolimage.IMAGEM) {
             AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT().getSymbol(), ctx.IDENT().getText() + " possui tipo incompativel com imagem");
         }

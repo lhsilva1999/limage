@@ -10,11 +10,12 @@ throw new RuntimeException("Linha "+linha+": "+msg);
 // Agrupamento de todas as Palavras-Chave, sendo esta o Padrão
 PALAVRA_CHAVE 
 	:	'ALG' | 'FIM' | 'imagem' | 'leia' | 'salvar' | 'mostrar' | 'inteiro' 
-        | 'filtroMedia' | 'filtroMediana' | 'adicionarRuido'
+        | 'filtroMedia' | 'filtroMediana' | 'adicionarRuido' | 'realceBordas' 
+        | 'limiarOtsu'
 	; 
 
 // Padrão para números inteiros
-NUM_INT	: ('0'..'9')+
+NUM_INT	: '-'?('0'..'9')+
 	;
 
 // Padrão para identificadores
@@ -87,7 +88,7 @@ cmd
 
 // Estrutura que define um comando aritmético na Linguagem limage
 cmd_aritmetico
-    :   IDENT OP_ARIT IDENT
+    :   IDENT OP_ARIT valor=(NUM_INT | IDENT)
     ;
 
 // Estrutura que define um comando de leitura
@@ -98,7 +99,7 @@ cmdLeia
 // Estrutura que define as operações em Linguagem limage
 cmdOperacoes
     :  filtro=('filtroMedia' | 'filtroMediana') ABREPAR IDENT (VIRGULA param2=(IDENT | NUM_INT) )? FECHAPAR
-       | ruido='adicionarRuido' ABREPAR IDENT FECHAPAR
+       | operacao=('adicionarRuido' | 'limiarOtsu' | 'realceBordas') ABREPAR IDENT FECHAPAR
     ;
 
 // Estrutura que define um comando mostrar para uma imagem em Linguagem limage

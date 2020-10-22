@@ -21,7 +21,7 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
         saida.append("import cv2 as cv\n");
         saida.append("import matplotlib.pyplot as plt\n");
         saida.append("import os.path as os\n");
-        saida.append("from skimage.util import random_noise\n");
+        saida.append("import skimage.util as sk\n");
         saida.append("\n");
         return super.visitPrograma(ctx);
     }
@@ -47,9 +47,10 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
         if (tabela.verificarTipo(ctx.IDENT().getText()) == TabelaDeSimbolos.Tipolimage.IMAGEM) {
             // É imagem
             saida.append(ctx.IDENT().getText() + "_path = str(input(\"Digite o caminho para sua imagem: \"))\n");
-            saida.append("while not (os.isfile("+ ctx.IDENT().getText() +"_path)):\n");
+            saida.append("while not (os.isfile(" + ctx.IDENT().getText() + "_path)):\n");
             saida.append("    " + ctx.IDENT().getText() + "_path = str(input(\"Digite o caminho para sua imagem: \"))\n");
             saida.append(ctx.IDENT().getText() + " = cv.imread(" + ctx.IDENT().getText() + "_path)\n");
+            saida.append(ctx.IDENT().getText() + " = cv.cvtColor(" + ctx.IDENT().getText() + ", cv.COLOR_BGR2GRAY)\n");
         } else {
             // É inteiro
             saida.append(ctx.IDENT().getText() + " = int(input(\"Digite o valor inteiro do seu parametro: \"))\n");
@@ -62,13 +63,12 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
     public Void visitCmdOperacoes(limageParser.CmdOperacoesContext ctx) {
         // recupera-se qual operação é a desejada 
         String operacao;
-        if (ctx.filtro != null){
+        if (ctx.filtro != null) {
             operacao = ctx.filtro.getText();
+        } else {
+            operacao = ctx.operacao.getText();
         }
-        else{
-            operacao = ctx.ruido.getText();
-        }
-        
+
         // Gera o código para cada operação
         switch (operacao) {
             case "filtroMedia":
@@ -80,7 +80,7 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
                 } else {
                     saida.append(", (5,5)");
                 }
-                
+
                 saida.append(")\n");
                 break;
             case "filtroMediana":
@@ -89,18 +89,17 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
                 if (ctx.param2 != null) {
                     param2 = ctx.param2.getText();
                     // Garante que o parâmetro não será par
-                    
-                    if(ctx.IDENT(1)!=null){
-                       saida.append("if " + param2 + " % 2 == 0:\n");
-                       saida.append("    " + param2 + " += 1\n"); 
-                    }
-                    else{
+
+                    if (ctx.IDENT(1) != null) {
+                        saida.append("if " + param2 + " % 2 == 0:\n");
+                        saida.append("    " + param2 + " += 1\n");
+                    } else {
                         saida.append("param2 = " + param2 + "\n");
                         saida.append("if param2 % 2 == 0:\n");
                         saida.append("    param2 = " + param2 + " + 1\n");
                         param2 = "param2";
                     }
-                    
+
                 } else {
                     param2 = "5";
                 }
@@ -111,8 +110,14 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
                 break;
 
             case "adicionarRuido":
-                saida.append(ctx.IDENT(0).getText() + " = " + "random_noise("+ctx.IDENT(0).getText()+", mode='s&p', seed=None, clip=True).astype(np.float32)\n");
-                return null;
+                saida.append(ctx.IDENT(0).getText() + " = sk.random_noise(" + ctx.IDENT(0).getText() + ", mode='s&p', seed=None, clip=True)\n");
+                saida.append(ctx.IDENT(0).getText() + " = sk.img_as_ubyte(" + ctx.IDENT(0).getText() + ")\n");
+                break;
+            case "limiarOtsu":
+                saida.append("limiarValor, " + ctx.IDENT(0).getText() + " = cv.threshold(" + ctx.IDENT(0).getText() + ", 0, 255, cv.THRESH_BINARY+cv.THRESH_OTSU)\n");
+                break;
+            case "realceBordas":
+                saida.append(ctx.IDENT(0).getText() + " = cv.Laplacian(" + ctx.IDENT(0).getText() + ",cv.CV_8U)\n");
             default:
 
                 break;
@@ -128,27 +133,21 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
         saida.append(ctx.IDENT(0).getText() + " = " + ctx.IDENT(0).getText() + " "
                 + ctx.OP_ARIT().getText() + " ");
         // Verifica o tipo do segundo operando, pois este pode ser também um inteiro, faz-se então uma conversão de seu valor para real
-        if (tabela.verificarTipo(ctx.IDENT(1).getText()) == TabelaDeSimbolos.Tipolimage.INTEIRO) {
+        if (ctx.IDENT(1) != null) {
+            if (tabela.verificarTipo(ctx.valor.getText()) == TabelaDeSimbolos.Tipolimage.INTEIRO) {
+                saida.append("float(");
+                saida.append(ctx.valor.getText() + ")\n");
+            } else {
+                saida.append(ctx.valor.getText() + "\n");
+            }
+        } else if (ctx.NUM_INT() != null) {
             saida.append("float(");
-            saida.append(ctx.IDENT(1).getText() + ")\n");
+            saida.append(ctx.valor.getText() + ")\n");
         } else {
-            saida.append(ctx.IDENT(1).getText() + "\n");
+            saida.append(ctx.valor.getText() + "\n");
         }
+
         return null;
-    }
-    
-    @Override
-    public Void visitCmdFinal(limageParser.CmdFinalContext ctx){
-        if(ctx.cmdSalvar() != null){
-            saida.append(ctx.cmdSalvar().IDENT().getText() + " = " + ctx.cmdSalvar().IDENT().getText() 
-                    + " / np.max(" + ctx.cmdSalvar().IDENT().getText() + ")\n");
-        }
-        else {
-            saida.append(ctx.cmdMostrar().IDENT().getText() + " = " + ctx.cmdMostrar().IDENT().getText() 
-                    + " / np.max(" + ctx.cmdMostrar().IDENT().getText() + ")\n");
-        }
-        
-        return super.visitCmdFinal(ctx);
     }
 
     // Gera um código Python para realizar um plot de uma imagem
@@ -163,7 +162,7 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
     // Gera um código Python para salvar uma imagem
     @Override
     public Void visitCmdSalvar(limageParser.CmdSalvarContext ctx) {
-        saida.append("plt.imsave(os.splitext(" + ctx.IDENT().getText() + "_path)[0]+\"_edited\" + os.splitext(" + ctx.IDENT().getText() + "_path)[1], " + ctx.IDENT().getText() + ")\n");
+        saida.append("cv.imwrite(os.splitext(" + ctx.IDENT().getText() + "_path)[0]+\"_edited\" + os.splitext(" + ctx.IDENT().getText() + "_path)[1], " + ctx.IDENT().getText() + ")\n");
         return null;
     }
 }
