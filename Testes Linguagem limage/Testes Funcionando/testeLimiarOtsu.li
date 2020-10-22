@@ -1,0 +1,8 @@
+ALG
+#  #
+imagem: A
+leia(A)
+limiarOtsu(A)
+salvar(A)
+mostrar(A)	
+FIM

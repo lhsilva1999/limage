@@ -1,0 +1,10 @@
+ALG
+# Operações aritmeticas #
+imagem : A
+leia(A)
+imagem: B
+leia(B)
+filtroMedia(B, 3)
+A - B
+salvar(A)	
+FIM
