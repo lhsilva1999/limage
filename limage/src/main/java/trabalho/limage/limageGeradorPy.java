@@ -155,6 +155,7 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
     public Void visitCmdMostrar(limageParser.CmdMostrarContext ctx) {
         saida.append("plt.imshow(" + ctx.IDENT().getText() + ", 'gray')\n");
         saida.append("plt.title(\" Imagem: " + ctx.IDENT().getText() + "\")\n");
+        saida.append("plt.axis('off')\n");
         saida.append("plt.show()\n");
         return null;
     }
