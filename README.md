@@ -22,3 +22,9 @@ Para execução do script, é necessário ter instalado previamente as seguintes
 
 Um exemplo de linha de comando para execução do analisador semântico e gerador de código é "java -jar
 C:\compilador\compilador.jar C:\arquivoEntrada\entrada.li C:\arquivoSaida\saida.py".
+
+Exemplos de códigos em limage podem ser encontrados [aqui](https://github.com/lhsilva1999/limage/tree/main/Testes%20Linguagem%20limage).
+
+Caso queira acessar apenas o executável do compilador, basta acessar: [compilador](https://github.com/lhsilva1999/limage/blob/main/limage/target/limage-1.0-SNAPSHOT-jar-with-dependencies.jar).
+
+
