@@ -1,9 +1,0 @@
-ALG
-#  #
-imagem : A
-leia(A)
-adicionarRuido(A)
-filtroMedia(A)
-salvar(A)
-mostrar(A)	
-FIM

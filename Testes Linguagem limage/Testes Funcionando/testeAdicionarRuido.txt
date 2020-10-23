@@ -1,8 +1,0 @@
-ALG
-# TUDO FUNCIONANDO :-) #
-imagem : Italo
-leia(Italo)
-adicionarRuido(Italo)
-salvar(Italo)
-mostrar(Italo)	
-FIM

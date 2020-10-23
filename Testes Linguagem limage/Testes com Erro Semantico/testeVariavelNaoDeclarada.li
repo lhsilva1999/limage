@@ -1,0 +1,8 @@
+ALG
+#  #
+imagem: A
+leia(A)
+filtroMedia(A, parametro)
+salvar(A)
+mostrar(A)	
+FIM
