@@ -18,9 +18,9 @@ public class limageParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, PALAVRA_CHAVE=14, NUM_INT=15, IDENT=16, 
-		COMENTARIO=17, COMENTARIOERRADO1=18, WS=19, OP_ARIT=20, VIRGULA=21, ABREPAR=22, 
-		FECHAPAR=23, ERROR=24;
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, PALAVRA_CHAVE=15, NUM_INT=16, 
+		IDENT=17, COMENTARIO=18, COMENTARIOERRADO1=19, WS=20, OP_ARIT=21, VIRGULA=22, 
+		ABREPAR=23, FECHAPAR=24, ERROR=25;
 	public static final int
 		RULE_programa = 0, RULE_declaracoes = 1, RULE_decl_imagem = 2, RULE_decl_inteiro = 3, 
 		RULE_cmd = 4, RULE_cmd_aritmetico = 5, RULE_cmdLeia = 6, RULE_cmdOperacoes = 7, 
@@ -37,16 +37,17 @@ public class limageParser extends Parser {
 		return new String[] {
 			null, "'ALG'", "'FIM'", "'imagem'", "':'", "'inteiro'", "'leia'", "'filtroMedia'", 
 			"'filtroMediana'", "'adicionarRuido'", "'limiarOtsu'", "'realceBordas'", 
-			"'mostrar'", "'salvar'", null, null, null, null, null, null, null, "','", 
-			"'('", "')'"
+			"'filtroGaussiano'", "'mostrar'", "'salvar'", null, null, null, null, 
+			null, null, null, "','", "'('", "')'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, "PALAVRA_CHAVE", "NUM_INT", "IDENT", "COMENTARIO", "COMENTARIOERRADO1", 
-			"WS", "OP_ARIT", "VIRGULA", "ABREPAR", "FECHAPAR", "ERROR"
+			null, null, null, "PALAVRA_CHAVE", "NUM_INT", "IDENT", "COMENTARIO", 
+			"COMENTARIOERRADO1", "WS", "OP_ARIT", "VIRGULA", "ABREPAR", "FECHAPAR", 
+			"ERROR"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -152,7 +153,7 @@ public class limageParser extends Parser {
 			setState(27);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << IDENT))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << IDENT))) != 0)) {
 				{
 				{
 				setState(24);
@@ -429,6 +430,7 @@ public class limageParser extends Parser {
 			case T__8:
 			case T__9:
 			case T__10:
+			case T__11:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(60);
@@ -573,14 +575,23 @@ public class limageParser extends Parser {
 		public Token filtro;
 		public Token param2;
 		public Token operacao;
+		public Token gaussiano;
+		public Token p2;
+		public Token p3;
 		public TerminalNode ABREPAR() { return getToken(limageParser.ABREPAR, 0); }
 		public List<TerminalNode> IDENT() { return getTokens(limageParser.IDENT); }
 		public TerminalNode IDENT(int i) {
 			return getToken(limageParser.IDENT, i);
 		}
 		public TerminalNode FECHAPAR() { return getToken(limageParser.FECHAPAR, 0); }
-		public TerminalNode VIRGULA() { return getToken(limageParser.VIRGULA, 0); }
-		public TerminalNode NUM_INT() { return getToken(limageParser.NUM_INT, 0); }
+		public List<TerminalNode> VIRGULA() { return getTokens(limageParser.VIRGULA); }
+		public TerminalNode VIRGULA(int i) {
+			return getToken(limageParser.VIRGULA, i);
+		}
+		public List<TerminalNode> NUM_INT() { return getTokens(limageParser.NUM_INT); }
+		public TerminalNode NUM_INT(int i) {
+			return getToken(limageParser.NUM_INT, i);
+		}
 		public CmdOperacoesContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -605,7 +616,7 @@ public class limageParser extends Parser {
 		enterRule(_localctx, 14, RULE_cmdOperacoes);
 		int _la;
 		try {
-			setState(85);
+			setState(97);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__6:
@@ -676,6 +687,61 @@ public class limageParser extends Parser {
 				match(FECHAPAR);
 				}
 				break;
+			case T__11:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(85);
+				((CmdOperacoesContext)_localctx).gaussiano = match(T__11);
+				setState(86);
+				match(ABREPAR);
+				setState(87);
+				match(IDENT);
+				setState(90);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+				case 1:
+					{
+					setState(88);
+					match(VIRGULA);
+					setState(89);
+					((CmdOperacoesContext)_localctx).p2 = _input.LT(1);
+					_la = _input.LA(1);
+					if ( !(_la==NUM_INT || _la==IDENT) ) {
+						((CmdOperacoesContext)_localctx).p2 = (Token)_errHandler.recoverInline(this);
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
+						consume();
+					}
+					}
+					break;
+				}
+				setState(94);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==VIRGULA) {
+					{
+					setState(92);
+					match(VIRGULA);
+					setState(93);
+					((CmdOperacoesContext)_localctx).p3 = _input.LT(1);
+					_la = _input.LA(1);
+					if ( !(_la==NUM_INT || _la==IDENT) ) {
+						((CmdOperacoesContext)_localctx).p3 = (Token)_errHandler.recoverInline(this);
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
+						consume();
+					}
+					}
+				}
+
+				setState(96);
+				match(FECHAPAR);
+				}
+				break;
 			default:
 				throw new NoViableAltException(this);
 			}
@@ -720,13 +786,13 @@ public class limageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(87);
-			match(T__11);
-			setState(88);
+			setState(99);
+			match(T__12);
+			setState(100);
 			match(ABREPAR);
-			setState(89);
+			setState(101);
 			match(IDENT);
-			setState(90);
+			setState(102);
 			match(FECHAPAR);
 			}
 		}
@@ -771,29 +837,29 @@ public class limageParser extends Parser {
 		CmdFinalContext _localctx = new CmdFinalContext(_ctx, getState());
 		enterRule(_localctx, 18, RULE_cmdFinal);
 		try {
-			setState(97);
+			setState(109);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(92);
+				setState(104);
 				cmdSalvar();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(93);
+				setState(105);
 				cmdMostrar();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(94);
+				setState(106);
 				cmdSalvar();
-				setState(95);
+				setState(107);
 				cmdMostrar();
 				}
 				break;
@@ -839,13 +905,13 @@ public class limageParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(99);
-			match(T__12);
-			setState(100);
+			setState(111);
+			match(T__13);
+			setState(112);
 			match(ABREPAR);
-			setState(101);
+			setState(113);
 			match(IDENT);
-			setState(102);
+			setState(114);
 			match(FECHAPAR);
 			}
 		}
@@ -861,32 +927,35 @@ public class limageParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\32k\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\33w\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4"+
 		"\f\t\f\3\2\3\2\3\2\7\2\34\n\2\f\2\16\2\37\13\2\3\2\3\2\3\2\3\2\3\3\3\3"+
 		"\3\3\6\3(\n\3\r\3\16\3)\3\3\3\3\3\3\3\3\3\3\3\3\7\3\62\n\3\f\3\16\3\65"+
 		"\13\3\3\4\3\4\3\4\3\4\3\5\3\5\3\5\3\5\3\6\3\6\5\6A\n\6\3\7\3\7\3\7\3\7"+
 		"\3\b\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\5\tQ\n\t\3\t\3\t\3\t\3\t\3\t"+
-		"\5\tX\n\t\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\5\13d\n\13\3\f"+
-		"\3\f\3\f\3\f\3\f\3\f\2\2\r\2\4\6\b\n\f\16\20\22\24\26\2\5\3\2\21\22\3"+
-		"\2\t\n\3\2\13\r\2h\2\30\3\2\2\2\4\'\3\2\2\2\6\66\3\2\2\2\b:\3\2\2\2\n"+
-		"@\3\2\2\2\fB\3\2\2\2\16F\3\2\2\2\20W\3\2\2\2\22Y\3\2\2\2\24c\3\2\2\2\26"+
-		"e\3\2\2\2\30\31\7\3\2\2\31\35\5\4\3\2\32\34\5\n\6\2\33\32\3\2\2\2\34\37"+
-		"\3\2\2\2\35\33\3\2\2\2\35\36\3\2\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\5\24"+
-		"\13\2!\"\7\4\2\2\"#\7\2\2\3#\3\3\2\2\2$%\5\6\4\2%&\5\16\b\2&(\3\2\2\2"+
-		"\'$\3\2\2\2()\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*\63\3\2\2\2+,\5\b\5\2,-\5\16"+
-		"\b\2-\62\3\2\2\2./\5\6\4\2/\60\5\16\b\2\60\62\3\2\2\2\61+\3\2\2\2\61."+
-		"\3\2\2\2\62\65\3\2\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\5\3\2\2\2\65\63"+
-		"\3\2\2\2\66\67\7\5\2\2\678\7\6\2\289\7\22\2\29\7\3\2\2\2:;\7\7\2\2;<\7"+
-		"\6\2\2<=\7\22\2\2=\t\3\2\2\2>A\5\20\t\2?A\5\f\7\2@>\3\2\2\2@?\3\2\2\2"+
-		"A\13\3\2\2\2BC\7\22\2\2CD\7\26\2\2DE\t\2\2\2E\r\3\2\2\2FG\7\b\2\2GH\7"+
-		"\30\2\2HI\7\22\2\2IJ\7\31\2\2J\17\3\2\2\2KL\t\3\2\2LM\7\30\2\2MP\7\22"+
-		"\2\2NO\7\27\2\2OQ\t\2\2\2PN\3\2\2\2PQ\3\2\2\2QR\3\2\2\2RX\7\31\2\2ST\t"+
-		"\4\2\2TU\7\30\2\2UV\7\22\2\2VX\7\31\2\2WK\3\2\2\2WS\3\2\2\2X\21\3\2\2"+
-		"\2YZ\7\16\2\2Z[\7\30\2\2[\\\7\22\2\2\\]\7\31\2\2]\23\3\2\2\2^d\5\26\f"+
-		"\2_d\5\22\n\2`a\5\26\f\2ab\5\22\n\2bd\3\2\2\2c^\3\2\2\2c_\3\2\2\2c`\3"+
-		"\2\2\2d\25\3\2\2\2ef\7\17\2\2fg\7\30\2\2gh\7\22\2\2hi\7\31\2\2i\27\3\2"+
-		"\2\2\n\35)\61\63@PWc";
+		"\3\t\3\t\3\t\3\t\3\t\5\t]\n\t\3\t\3\t\5\ta\n\t\3\t\5\td\n\t\3\n\3\n\3"+
+		"\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\5\13p\n\13\3\f\3\f\3\f\3\f\3\f\3\f"+
+		"\2\2\r\2\4\6\b\n\f\16\20\22\24\26\2\5\3\2\22\23\3\2\t\n\3\2\13\r\2w\2"+
+		"\30\3\2\2\2\4\'\3\2\2\2\6\66\3\2\2\2\b:\3\2\2\2\n@\3\2\2\2\fB\3\2\2\2"+
+		"\16F\3\2\2\2\20c\3\2\2\2\22e\3\2\2\2\24o\3\2\2\2\26q\3\2\2\2\30\31\7\3"+
+		"\2\2\31\35\5\4\3\2\32\34\5\n\6\2\33\32\3\2\2\2\34\37\3\2\2\2\35\33\3\2"+
+		"\2\2\35\36\3\2\2\2\36 \3\2\2\2\37\35\3\2\2\2 !\5\24\13\2!\"\7\4\2\2\""+
+		"#\7\2\2\3#\3\3\2\2\2$%\5\6\4\2%&\5\16\b\2&(\3\2\2\2\'$\3\2\2\2()\3\2\2"+
+		"\2)\'\3\2\2\2)*\3\2\2\2*\63\3\2\2\2+,\5\b\5\2,-\5\16\b\2-\62\3\2\2\2."+
+		"/\5\6\4\2/\60\5\16\b\2\60\62\3\2\2\2\61+\3\2\2\2\61.\3\2\2\2\62\65\3\2"+
+		"\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\5\3\2\2\2\65\63\3\2\2\2\66\67\7\5"+
+		"\2\2\678\7\6\2\289\7\23\2\29\7\3\2\2\2:;\7\7\2\2;<\7\6\2\2<=\7\23\2\2"+
+		"=\t\3\2\2\2>A\5\20\t\2?A\5\f\7\2@>\3\2\2\2@?\3\2\2\2A\13\3\2\2\2BC\7\23"+
+		"\2\2CD\7\27\2\2DE\t\2\2\2E\r\3\2\2\2FG\7\b\2\2GH\7\31\2\2HI\7\23\2\2I"+
+		"J\7\32\2\2J\17\3\2\2\2KL\t\3\2\2LM\7\31\2\2MP\7\23\2\2NO\7\30\2\2OQ\t"+
+		"\2\2\2PN\3\2\2\2PQ\3\2\2\2QR\3\2\2\2Rd\7\32\2\2ST\t\4\2\2TU\7\31\2\2U"+
+		"V\7\23\2\2Vd\7\32\2\2WX\7\16\2\2XY\7\31\2\2Y\\\7\23\2\2Z[\7\30\2\2[]\t"+
+		"\2\2\2\\Z\3\2\2\2\\]\3\2\2\2]`\3\2\2\2^_\7\30\2\2_a\t\2\2\2`^\3\2\2\2"+
+		"`a\3\2\2\2ab\3\2\2\2bd\7\32\2\2cK\3\2\2\2cS\3\2\2\2cW\3\2\2\2d\21\3\2"+
+		"\2\2ef\7\17\2\2fg\7\31\2\2gh\7\23\2\2hi\7\32\2\2i\23\3\2\2\2jp\5\26\f"+
+		"\2kp\5\22\n\2lm\5\26\f\2mn\5\22\n\2np\3\2\2\2oj\3\2\2\2ok\3\2\2\2ol\3"+
+		"\2\2\2p\25\3\2\2\2qr\7\20\2\2rs\7\31\2\2st\7\23\2\2tu\7\32\2\2u\27\3\2"+
+		"\2\2\f\35)\61\63@P\\`co";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -70,6 +70,17 @@ public class AnalisadorSemantico extends limageBaseVisitor<Void> {
             }
         }
 
+        // Verifica se há um terceiro parâmetro passado pelo programador em linguagem limage
+        if (ctx.IDENT(2) != null) {
+            // Adiciona erro se o segundo parâmetro não existe na tabela
+            if (tabela.verificar(ctx.IDENT(2).getText()) == null) {
+                AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(2).getSymbol(), "Variavel " + ctx.IDENT(2).getText() + " nao declarada anteriormente");
+            } // Adiciona erro se o segundo parâmetro não é do tipo inteiro
+            else if (tabela.verificarTipo(ctx.IDENT(2).getText()) != TabelaDeSimbolos.Tipolimage.INTEIRO) {
+                AnalisadorSemanticoUtils.adicionarErroSemantico(ctx.IDENT(2).getSymbol(), ctx.IDENT(2).getText() + " possui tipo incompativel com inteiro");
+            }
+        }
+
         return null;
     }
 

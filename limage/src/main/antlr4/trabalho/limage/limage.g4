@@ -11,7 +11,7 @@ throw new RuntimeException("Linha "+linha+": "+msg);
 PALAVRA_CHAVE 
 	:	'ALG' | 'FIM' | 'imagem' | 'leia' | 'salvar' | 'mostrar' | 'inteiro' 
         | 'filtroMedia' | 'filtroMediana' | 'adicionarRuido' | 'realceBordas' 
-        | 'limiarOtsu'
+        | 'limiarOtsu' | 'filtroGaussiano'
 	; 
 
 // Padrão para números inteiros
@@ -100,6 +100,7 @@ cmdLeia
 cmdOperacoes
     :  filtro=('filtroMedia' | 'filtroMediana') ABREPAR IDENT (VIRGULA param2=(IDENT | NUM_INT) )? FECHAPAR
        | operacao=('adicionarRuido' | 'limiarOtsu' | 'realceBordas') ABREPAR IDENT FECHAPAR
+       | gaussiano='filtroGaussiano' ABREPAR IDENT (VIRGULA p2=(IDENT | NUM_INT) )? (VIRGULA p3=(IDENT | NUM_INT) )? FECHAPAR
     ;
 
 // Estrutura que define um comando mostrar para uma imagem em Linguagem limage

@@ -46,14 +46,14 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
         // Se a declaração for de uma imagem, recebe o caminho dela e carrega em um numpy array com o mesmo nome que no programa em Linguagem limage
         if (tabela.verificarTipo(ctx.IDENT().getText()) == TabelaDeSimbolos.Tipolimage.IMAGEM) {
             // É imagem
-            saida.append(ctx.IDENT().getText() + "_path = str(input(\"Digite o caminho para sua imagem: \"))\n");
+            saida.append(ctx.IDENT().getText() + "_path = str(input(\"Digite o caminho para a imagem " + ctx.IDENT().getText() + ": \"))\n");
             saida.append("while not (os.isfile(" + ctx.IDENT().getText() + "_path)):\n");
-            saida.append("    " + ctx.IDENT().getText() + "_path = str(input(\"Digite o caminho para sua imagem: \"))\n");
+            saida.append("    " + ctx.IDENT().getText() + "_path = str(input(\"Digite o caminho para a imagem " + ctx.IDENT().getText() + ": \"))\n");
             saida.append(ctx.IDENT().getText() + " = cv.imread(" + ctx.IDENT().getText() + "_path)\n");
             saida.append(ctx.IDENT().getText() + " = cv.cvtColor(" + ctx.IDENT().getText() + ", cv.COLOR_BGR2GRAY)\n");
         } else {
             // É inteiro
-            saida.append(ctx.IDENT().getText() + " = int(input(\"Digite o valor inteiro do seu parametro: \"))\n");
+            saida.append(ctx.IDENT().getText() + " = int(input(\"Digite o valor inteiro do parametro " + ctx.IDENT().getText() + ": \"))\n");
         }
         return null;
     }
@@ -65,22 +65,36 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
         String operacao;
         if (ctx.filtro != null) {
             operacao = ctx.filtro.getText();
-        } else {
+        } else if (ctx.operacao != null) {
             operacao = ctx.operacao.getText();
+        } else {
+            operacao = ctx.gaussiano.getText();
         }
 
         // Gera o código para cada operação
         switch (operacao) {
             case "filtroMedia":
+                String parametro2;
+                // Verifica se há um segundo parâmetro, se ele não é negativo e estabelece um valor padrão caso o mesmo não tenha sido determinado pelo programador em limage
+                if (ctx.param2 != null) {
+                    parametro2 = ctx.param2.getText();
+                    // Garante que o parâmetro não será par
+                    if (ctx.IDENT(1) != null) {
+                        saida.append("if " + parametro2 + " < 0:\n");
+                        saida.append("    " + parametro2 + " *= -1\n");
+                    } else {
+                        saida.append("param2 = " + parametro2 + "\n");
+                        saida.append("if param2 < 0:\n");
+                        saida.append("    param2 *= -1\n");
+                        parametro2 = "param2";
+                    }
+
+                } else {
+                    parametro2 = "5";
+                }
                 saida.append(ctx.IDENT(0).getText() + " = cv.blur");
                 saida.append("(" + ctx.IDENT(0).getText());
-                // Verifica se há um segundo parâmetro e estabelece um valor padrão
-                if (ctx.param2 != null) {
-                    saida.append(", (" + ctx.param2.getText() + ", " + ctx.param2.getText() + ")");
-                } else {
-                    saida.append(", (5,5)");
-                }
-
+                saida.append(", ("+parametro2+", "+parametro2+")");
                 saida.append(")\n");
                 break;
             case "filtroMediana":
@@ -88,27 +102,29 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
                 // Verifica se há um segundo parâmetro e estabelece um valor padrão caso o mesmo não tenha sido determinado pelo programador em limage
                 if (ctx.param2 != null) {
                     param2 = ctx.param2.getText();
-                    // Garante que o parâmetro não será par
-
+                    // Garante que o parâmetro não será par nem negativo
                     if (ctx.IDENT(1) != null) {
                         saida.append("if " + param2 + " % 2 == 0:\n");
                         saida.append("    " + param2 + " += 1\n");
+                        saida.append("if " + param2 + " < 0:\n");
+                        saida.append("    " + param2 + " *= -1\n");
                     } else {
                         saida.append("param2 = " + param2 + "\n");
                         saida.append("if param2 % 2 == 0:\n");
                         saida.append("    param2 = " + param2 + " + 1\n");
+                        saida.append("if param2 < 0:\n");
+                        saida.append("    param2 *= -1\n");
                         param2 = "param2";
                     }
-
                 } else {
                     param2 = "5";
                 }
+                
                 saida.append(ctx.IDENT(0).getText() + " = cv.medianBlur");
                 saida.append("(" + ctx.IDENT(0).getText());
                 saida.append(", " + param2);
                 saida.append(")\n");
                 break;
-
             case "adicionarRuido":
                 saida.append(ctx.IDENT(0).getText() + " = sk.random_noise(" + ctx.IDENT(0).getText() + ", mode='s&p', seed=None, clip=True)\n");
                 saida.append(ctx.IDENT(0).getText() + " = sk.img_as_ubyte(" + ctx.IDENT(0).getText() + ")\n");
@@ -118,6 +134,55 @@ public class limageGeradorPy extends limageBaseVisitor<Void> {
                 break;
             case "realceBordas":
                 saida.append(ctx.IDENT(0).getText() + " = cv.Laplacian(" + ctx.IDENT(0).getText() + ",cv.CV_8U)\n");
+                break;
+            case "filtroGaussiano":
+                String p2;
+                String p3;
+                if (ctx.p2 != null) {
+                    p2 = ctx.p2.getText();
+                    // Verifica se há um segundo parâmetro, garante que o parâmetro não será par nem negativo e estabelece um valor padrão
+                    if (ctx.IDENT(1) != null) {
+                        saida.append("if " + p2 + " % 2 == 0:\n");
+                        saida.append("    " + p2 + " += 1\n");
+                        saida.append("if " + p2 + " < 0:\n");
+                        saida.append("    " + p2 + " *= -1\n");
+                    } else {
+                        saida.append("param2 = " + p2 + "\n");
+                        saida.append("if param2 % 2 == 0:\n");
+                        saida.append("    param2 = " + p2 + " + 1\n");
+                        saida.append("if param2 < 0:\n");
+                        saida.append("    param2 *= -1\n");
+                        p2 = "param2";
+                    }
+                } else {
+                    p2 = "0";
+                }
+                
+                if (ctx.p3 != null) {
+                    p3 = ctx.p3.getText();
+                    // Verifica se há um terceiro parâmetro, garante que o parâmetro não será par e estabelece um valor padrão
+                    if (ctx.IDENT(2) != null) {
+                        saida.append("if " + p3 + " % 2 == 0:\n");
+                        saida.append("    " + p3 + " += 1\n");
+                        saida.append("if " + p3 + " < 0:\n");
+                        saida.append("    " + p3 + " *= -1\n");
+                    } else {
+                        saida.append("param3 = " + p3 + "\n");
+                        saida.append("if param3 % 2 == 0:\n");
+                        saida.append("    param3 = " + p3 + " + 1\n");
+                        saida.append("if param3 < 0:\n");
+                        saida.append("    param3 *= -1\n");
+                        p3 = "param3";
+                    }
+                } else {
+                    p3 = "1";
+                }
+
+                saida.append(ctx.IDENT(0).getText() + " = cv.GaussianBlur");
+                saida.append("(" + ctx.IDENT(0).getText());
+                saida.append(", (" + p2 + ", " + p2 + ")");
+                saida.append(", " + p3 + ")\n");
+                break;
             default:
 
                 break;
