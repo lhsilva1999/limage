@@ -1,0 +1,7 @@
+ALG
+# Teste erro sintático, ausência de delimitador ":" na declaração da imagem #
+imagem B
+leia(B)
+filtroMediana(B, 5)
+mostrar(B)	
+FIM

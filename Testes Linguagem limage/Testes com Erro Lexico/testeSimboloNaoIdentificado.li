@@ -1,0 +1,7 @@
+ALG
+# Teste erro léxico, uso de símbolo @ não identificado #
+imagem: B
+leia(B)
+filtroGaussiano(B, @)
+mostrar(B)	
+FIM

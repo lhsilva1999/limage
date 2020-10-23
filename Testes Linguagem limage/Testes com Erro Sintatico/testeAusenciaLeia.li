@@ -1,0 +1,8 @@
+ALG
+# Teste erro sintático, ausência de comando leia após a declaração da imagem #
+imagem: B
+adicionarRuido(A)
+filtroMediana(B, 5)
+salvar(A)
+mostrar(B)	
+FIM

@@ -1,0 +1,10 @@
+ALG
+# Teste erro léxico, uso de símbolo = não identificado #
+imagem: A
+leia(A)
+imagem: B
+leia(B)
+realceBordas(B)
+A=B
+salvar(A)	
+FIM

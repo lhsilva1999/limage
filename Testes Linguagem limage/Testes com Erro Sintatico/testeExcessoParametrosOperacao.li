@@ -1,0 +1,8 @@
+ALG
+# Teste erro sintático, passagem de parâmetro para uma operação que não requer parâmetros #
+imagem: A
+leia(A)
+adicionarRuido(A,2)
+A+3
+mostrar(A)	
+FIM

@@ -1,0 +1,6 @@
+ALG
+# Teste erro sintático, ausência dos comandos finais salvar ou mostrar #
+imagem: A
+leia(A)
+filtroGaussiano(A, 5)	
+FIM
