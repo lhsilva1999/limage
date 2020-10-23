@@ -1,5 +1,6 @@
 # limage
 A Linguagem limage tem como objetivo facilitar o uso de operações e técnicas de processamento digital em imagens, gerando um script em python que as implementam. Para tal, é possível realizar desde a adição de ruídos até a aplicação de filtros com diversas finalidades. As funções da linguagem estão descritas [aqui](https://github.com/lhsilva1999/limage/blob/main/Documenta%C3%A7%C3%A3o%20das%20fun%C3%A7%C3%B5es%20da%20linguagem).
+
 Além da filtragem linear, operações entre imagens de adição, subtração, produto e divisão (realizadas pixel a pixel) são outra possibilidade para o programador em Linguagem limage. Para finalizar, por vezes, na área de aplicação especificada, se faz necessário que um parâmetro seja aplicado sobre uma imagem através de uma operação aritmética simples, na qual esse valor replica a operação em cada pixel da imagem. Portanto, ao precisar de uma ferramenta que facilite o seu processamento de imagens, é com a Linguagem limage que você encontrará maior facilidade e sem precisar decorar nomes de bibliotecas ou funções para tal. 
 
 
