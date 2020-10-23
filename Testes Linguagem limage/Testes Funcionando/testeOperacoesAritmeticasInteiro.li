@@ -1,5 +1,5 @@
 ALG
-# Operações aritmeticas #
+# Operações aritmeticas entre uma imagem e um parâmetro inteiro #
 imagem : A
 leia(A)
 inteiro: B

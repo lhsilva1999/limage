@@ -1,5 +1,5 @@
 ALG
-#  #
+# Exemplo de aplicação de ruídos seguido de suavização por Filtro de Mediana #
 imagem: B
 leia(B)
 adicionarRuido(B)

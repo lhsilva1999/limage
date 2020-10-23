@@ -1,10 +1,10 @@
 ALG
-# Filtro Mediana #
-imagem : Italo
-leia(Italo)
-inteiro: parametro
-leia(parametro)
-filtroMediana(Italo, parametro)
-salvar(Italo)
-mostrar(Italo)	
+# Exemplo de uso do Filtro da  Mediana #
+imagem : teste
+leia(teste)
+inteiro: valor
+leia(valor)
+filtroMediana(teste, valor)
+salvar(teste)
+mostrar(teste)	
 FIM

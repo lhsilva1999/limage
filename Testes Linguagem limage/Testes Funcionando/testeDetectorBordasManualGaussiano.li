@@ -1,0 +1,11 @@
+ALG
+# Exemplo de Aplicação para detecção de Bordas com outro filtro de suavização #
+imagem : A
+leia(A)
+imagem: B
+leia(B)
+filtroGaussiano(B, 3)
+A - B
+salvar(A)
+mostrar(A)	
+FIM

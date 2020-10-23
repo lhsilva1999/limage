@@ -1,5 +1,5 @@
 ALG
-# Operações aritmeticas #
+# Exemplo Aplicação da Linguagem para detecção de bordas #
 imagem : A
 leia(A)
 imagem: B

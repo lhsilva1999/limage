@@ -1,5 +1,5 @@
 ALG
-#  #
+# Exemplo de uso do Realce de Bordas #
 imagem: A
 leia(A)
 realceBordas(A)

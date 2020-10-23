@@ -1,0 +1,8 @@
+ALG
+# Exemplo de uso do Filtro Gaussiano #
+imagem : A
+leia(A)
+filtroGaussiano(A, 3)
+salvar(A)
+mostrar(A)	
+FIM

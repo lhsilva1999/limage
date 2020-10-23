@@ -1,5 +1,5 @@
 ALG
-#  #
+# Exemplo de uso da limiarização de Otsu #
 imagem: A
 leia(A)
 limiarOtsu(A)

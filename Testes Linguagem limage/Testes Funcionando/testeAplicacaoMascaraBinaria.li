@@ -1,11 +1,12 @@
 ALG
-# Operações aritmeticas #
+# Exemplo de Aplicação da Linguagem #
 imagem : A
 leia(A)
 imagem: B
 leia(B)
 filtroMedia(B, 3)
 limiarOtsu(B)
+# Invertendo a intensidade dos pixels na imagem limiarizada #
 B - 255
 B / -255
 A * B

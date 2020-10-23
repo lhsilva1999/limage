@@ -1,8 +1,8 @@
 ALG
-# TUDO FUNCIONANDO :-) #
-imagem : Italo
-leia(Italo)
-adicionarRuido(Italo)
-salvar(Italo)
-mostrar(Italo)	
+# Adicionando ruido #
+imagem : teste
+leia(teste)
+adicionarRuido(teste)
+salvar(teste)
+mostrar(teste)	
 FIM
