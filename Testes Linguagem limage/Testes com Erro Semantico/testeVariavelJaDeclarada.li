@@ -1,5 +1,5 @@
 ALG
-#  #
+# Teste de Erro Semântico de variável ou imagem já declarada anteriormente #
 imagem: A
 leia(A)
 inteiro: A

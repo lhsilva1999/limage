@@ -1,5 +1,5 @@
 ALG
-#  #
+# Teste de Erro Semântico de uso de variável inteira não declarada #
 imagem: A
 leia(A)
 filtroMedia(A, parametro)

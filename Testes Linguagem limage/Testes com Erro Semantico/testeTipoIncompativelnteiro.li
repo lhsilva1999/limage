@@ -1,5 +1,5 @@
 ALG
-#  #
+# Teste de Erro Semântico de uso de um inteiro no lugar de uma imagem no filtro #
 imagem: A
 leia(A)
 inteiro: parametro

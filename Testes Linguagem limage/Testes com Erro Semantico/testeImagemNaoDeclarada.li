@@ -1,5 +1,5 @@
 ALG
-#  #
+# Teste de Erro Semântico de uso de Imagem não Declarada #
 imagem: B
 leia(B)
 adicionarRuido(A)
