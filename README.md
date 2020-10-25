@@ -7,7 +7,7 @@ Por vezes, na área de aplicação especificada, se faz necessário que um fator
 ## Importando e compilando o projeto do compilador da linguagem limage no NetBeans
 Para compilar o programa, é necessário ter uma IDE que tenha suporte para a linguagem JAVA. A recomendação do grupo é o uso do [Apache NetBeans](https://netbeans.apache.org/download/index.html), preferencialmente, em uma de suas versões mais atuais. O [JDK](https://www.oracle.com/br/java/technologies/javase-downloads.html) utilizado no desenvolvimento e testes se trata da versão 14.0.2. 
 
-Primeiro, clone o repositório e o projeto JAVA [Maven](https://maven.apache.org/) de nosso compilador estará na pasta [limage](limage/) em seu computador.
+Primeiro, clone ou baixe o repositório e o projeto JAVA [Maven](https://maven.apache.org/) de nosso compilador estará na pasta [limage](limage/) em seu computador.
 Em seguida, no Apache NetBeans clique em "File -> Open Project..." e selecione a pasta limage baixada anteriormente.
 Com isso, caso queira, podem ser feitas alterações no compilador.
 Por fim, compilando o projeto dois arquivos executáveis ".jar" do compilador serão gerados na pasta "Targets". Como o projeto utiliza depedências com o [ANTLR](https://www.antlr.org/), o executável que deve ser utilizado é aquele com as referidas dependências.
