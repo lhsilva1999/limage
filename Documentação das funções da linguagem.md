@@ -2,8 +2,9 @@
 
 Este arquivo é destinado para descrição dos comandos utilizados na linguagem Limage.
 
-
-leia(X): Este comando deve estar logo abaixo da declaração da variável. Caso X seja uma imagem, o comando solicita o caminho onde ela se encontra. Caso seja um valor inteiro, o comando solicita que o usuário informe o seu valor.
+## Declarações
+- tipo : nome_variavel - Este é o formato para declarar uma imagem ou um valor inteiro.
+- leia(X) - Este comando deve estar logo abaixo da declaração da variável. Caso X seja uma imagem, o comando solicita o caminho onde ela se encontra. Caso seja um valor inteiro, o comando solicita que o usuário informe o seu valor.
 
 ## Operações básicas (+,-,*,/)
 As operações básicas são permitidas e as atribuições são para o termo à esquerda, ou seja, se desejar realizar uma operação entre imagem e um valor inteiro, o programador deve colocar o identificador da imagem à esquerda.
