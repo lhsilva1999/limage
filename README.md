@@ -13,7 +13,7 @@ Com isso, caso queira, podem ser feitas alterações no compilador.
 Por fim, compilando o projeto dois arquivos executáveis ".jar" do compilador serão gerados na pasta "Targets". Como o projeto utiliza depedências com o [ANTLR](https://www.antlr.org/), o executável que deve ser utilizado é aquele com as referidas dependências.
 
 ## Execução do compilador da linguagem limage
-A partir do arquivo ".jar", gerado na pasta "Target" ou disponível em [Compilador](limage/target/limage-1.0-SNAPSHOT-jar-with-dependencies.jar), é possível executar o programa no terminal.
+A partir do arquivo ".jar" com dependências ("limage-1.0-SNAPSHOT-jar-with-dependencies.jar"), gerado na pasta "Target" ou disponível em [Compilador](limage/target/limage-1.0-SNAPSHOT-jar-with-dependencies.jar), é possível executar o programa no terminal.
 
 Para executá-lo, devem ser passados dois argumentos, o primeiro é o caminho para o arquivo de entrada referente ao **código desenvolvido na linguagem limage** e o segundo é o caminho para o **arquivo python (.py)** de saída.
 
